@@ -8,21 +8,18 @@ import { WeatherService } from '../../weather.service'
   styleUrls: ['./current-weather.component.scss']
 })
 export class CurrentWeatherComponent implements OnInit {
-  constructor(private weather: WeatherService) { }
-  test: any;
+    test: any ;
+
+  constructor(private weatherService: WeatherService) { }
 
   ngOnInit() {
-    this.weather.setPosition();
-
+    this.weatherService.setPosition()
     this.getWeather()
   }
 
   getWeather(): void {
-    // this.test =  this.weather.state.queryString.subscribe();
-    
-    this.weather.getWeather()
-        .subscribe(weather => this.test = weather);
-    
+   this.weatherService.getWeather(this.weatherService.queryString)
+       .subscribe(data => this.test = data);
   }
 
 }
