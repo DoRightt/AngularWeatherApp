@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
 import { WeatherService } from '../../weather.service'
+import {Observable} from "rxjs/index";
+import {SimpleChanges} from "@angular/core";
 
 @Component({
   selector: 'app-current-weather',
@@ -8,12 +10,13 @@ import { WeatherService } from '../../weather.service'
   styleUrls: ['./current-weather.component.scss']
 })
 export class CurrentWeatherComponent implements OnInit {
-    query: any ;
+  weatherCatalog;
 
-  constructor(private weatherService: WeatherService) { }
+  constructor(private weatherService: WeatherService) {
+  }
 
   ngOnInit() {
-    this.weatherService.setPosition()
+      this.weatherService.setPosition();
   }
 
 }
