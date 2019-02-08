@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { WeatherService } from '../../weather.service'
-import {Observable} from "rxjs/index";
+import {Observable, interval, of} from "rxjs/index";
 import {SimpleChanges} from "@angular/core";
 
 @Component({
@@ -16,7 +16,7 @@ export class CurrentWeatherComponent implements OnInit {
   }
 
   ngOnInit() {
-      this.weatherService.setPosition();
+        this.weatherService.setPosition();
   }
 
 }

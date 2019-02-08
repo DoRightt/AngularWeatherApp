@@ -24,7 +24,6 @@ export class WeatherService {
     this.queryString = `http://api.worldweatheronline.com/premium/v1/weather.ashx?key=${this.key}&q=${position.coords.latitude},${position.coords.longitude}&num_of_days=14&tp=4&format=json`;
 
     this.getWeather()
-
   }
 
   getWeather() {
@@ -34,7 +33,6 @@ export class WeatherService {
             err => console.error(err)
         );
   }
-
 
   setPosition() {
     navigator.geolocation.getCurrentPosition(this.setProps.bind(this))
