@@ -1,19 +1,19 @@
 <div class="currentWeather-block">
   <div class="currentWeather__date-block">
     <div>
-      Cейчас <span class="currentWeather__time">12: 12</span>
+      Now <span class="currentWeather__time">{{date | date: 'HH:mm'}}</span>
       <br/>
-      <span class="currentWeather__date">24 dekabra</span>
+      <span class="currentWeather__date">{{date | date: 'dd MMM yyyy'}}</span>
     </div>
   </div>
   <div class="weather-prop-name weather-prop-name--main">
-    <img class="weather-icon" src='https://cdn3.iconfinder.com/data/icons/bebreezee-weather-symbols/690/icon-weather-sunrainheavy-512.png' alt=""/>
-    <span class="weather-prop-value weather-prop-value--temp">{{weatherService.currentTemperature}}&#176;</span>
+    <img class="weather-icon" [src]='icon' alt=""/>
+    <span class="weather-prop-value weather-prop-value--temp">{{temp}}&#176;</span>
   </div>
-  <p class="weather--more">sneg</p>
+  <p class="weather--more">{{desc}}</p>
   <div class="currentWeather__detail">
-    <div class="weather-prop-name">Ветер <span class="weather-prop-value">12 м/c</span></div>
-    <div class="weather-prop-name">Влажность <span class="weather-prop-value">12%</span></div>
-    <div class="weather-prop-name">Давление <span class="weather-prop-value">12 <span>мм     рт.ст.</span></span></div>
+    <div class="weather-prop-name">Wind <span class="weather-prop-value">{{wind}} м/c</span></div>
+    <div class="weather-prop-name">Humidity <span class="weather-prop-value">{{humidity}}%</span></div>
+    <div class="weather-prop-name">Pressure <span class="weather-prop-value">{{pressure}} <span>mm Hg.</span></span></div>
   </div>
 </div>
