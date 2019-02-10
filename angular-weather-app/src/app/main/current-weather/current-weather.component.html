@@ -1,4 +1,4 @@
-<div class="currentWeather-block">
+<div class="currentWeather-block" [ngStyle]="{backgroundImage: 'url(' + background + ')'}" >
   <div class="currentWeather__date-block">
     <div>
       Now <span class="currentWeather__time">{{date | date: 'HH:mm'}}</span>
@@ -7,10 +7,10 @@
     </div>
   </div>
   <div class="weather-prop-name weather-prop-name--main">
-    <img class="weather-icon" [src]='icon' alt=""/>
+    <img class="weather-icon" [src]='iconUrl' alt=""/>
     <span class="weather-prop-value weather-prop-value--temp">{{temp}}&#176;</span>
   </div>
-  <p class="weather--more">{{desc}}</p>
+  <p class="weather--more">{{descr}}</p>
   <div class="currentWeather__detail">
     <div class="weather-prop-name">Wind <span class="weather-prop-value">{{wind}} м/c</span></div>
     <div class="weather-prop-name">Humidity <span class="weather-prop-value">{{humidity}}%</span></div>

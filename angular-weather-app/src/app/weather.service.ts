@@ -1,31 +1,48 @@
 ///<reference path="../../node_modules/@angular/common/http/src/params.d.ts"/>
 import { Injectable } from '@angular/core';
-import {Observable, of, Subject} from "rxjs/index";
-import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
+import {Observable} from "rxjs/index";
+import {HttpClient} from "@angular/common/http";
+import {switchMap, tap} from "rxjs/internal/operators";
 
 @Injectable({
   providedIn: 'root'
 })
 export class WeatherService {
-    key = 'dd6301427900459c863160646190201';
-    proxyUrl ='https://cors-anywhere.herokuapp.com/';
-    weatherCatalog;
+    private key = 'dd6301427900459c863160646190201';
 
-  constructor(private http: HttpClient) { }
+    private queryString = null;
 
-    getWeather(position) {
-        const { latitude, longitude } = position.coords;
-        const queryString = `https://api.worldweatheronline.com/premium/v1/weather.ashx?key=${this.key}&q=${latitude},${longitude}&num_of_days=14&tp=4&format=json`;
-        return this.http.get(queryString);
-    }
+    constructor(private http: HttpClient) {}
 
-    async getCurrentPosition() {
-        return new Promise((resolve, reject) => {
-            navigator.geolocation.getCurrentPosition(
-                res => resolve(res),
-                err => reject(err)
-            );
+    private getCurrentPosition(): Observable<Position> {
+        return new Observable((observer) => {
+            // `getCurrentPosition` - асинхронная функция, для удобства оборачиваем в поток
+            navigator.geolocation.getCurrentPosition((position: Position) => {
+                observer.next(position);
+                observer.complete();
+            }, (error) => {
+                observer.error(error);
+                observer.complete();
+            });
         });
     }
 
+    private setQueryString(position: Position): void {
+        this.queryString = `http://api.worldweatheronline.com/premium/v1/weather.ashx?key=${this.key}&q=${position.coords.latitude},${position.coords.longitude}&num_of_days=14&tp=4&format=json`;
+    }
+
+    private getWeather() {
+        return this.http.get(this.queryString);
+    }
+
+    public getWeatherCatalog() {
+        // получили `Position`
+        return this.getCurrentPosition().pipe(
+            // засеттили `queryString`
+            tap((position) => this.setQueryString(position)),
+            // делаем запрос на этот `queryString`
+            switchMap(() => this.getWeather())
+        );
+    }
 }
+
