@@ -16,7 +16,6 @@ export class WeatherService {
 
     private getCurrentPosition(): Observable<Position> {
         return new Observable((observer) => {
-            // `getCurrentPosition` - асинхронная функция, для удобства оборачиваем в поток
             navigator.geolocation.getCurrentPosition((position: Position) => {
                 observer.next(position);
                 observer.complete();
@@ -35,13 +34,15 @@ export class WeatherService {
         return this.http.get(this.queryString);
     }
 
-    public getWeatherCatalog() {
+    public getWeatherCatalog(): Observable<any> {
         // получили `Position`
         return this.getCurrentPosition().pipe(
             // засеттили `queryString`
             tap((position) => this.setQueryString(position)),
             // делаем запрос на этот `queryString`
-            switchMap(() => this.getWeather())
+            switchMap(() => {
+                return this.getWeather()
+            })
         );
     }
 }

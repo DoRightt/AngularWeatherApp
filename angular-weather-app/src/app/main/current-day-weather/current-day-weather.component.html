@@ -1,3 +1,42 @@
-<p>
-  current-day-weather works!
-</p>
+<div class="current-day__block cday-block">
+  <div class="cday-block__weather">
+    <div class="current-day__item cday-item" *ngFor="let hour of weatherHourly">
+      <div class="cday-item__time">
+        {{hour.time}}<span>00</span>
+      </div>
+      <div class="cday-item__icon">
+        <img src='https://cdn3.iconfinder.com/data/icons/bebreezee-weather-symbols/690/icon-weather-sunrainheavy-512.png' alt=""/>
+      </div>
+      <div class="cday-item__temp">
+        24&#176;
+      </div>
+    </div>
+  </div>
+  <div class="current-day__separator">
+    <span>Скорость ветра, <i>м.с</i></span>
+    <div class="sep-line"></div>
+  </div>
+  <div class="cday-block__wind">
+    <div class="current-day__item">
+      <div class="cday-item__wind">12</div>
+    </div>
+    <div class="current-day__item">
+      <div class="cday-item__wind">12</div>
+    </div>
+    <div class="current-day__item">
+      <div class="cday-item__wind">12</div>
+    </div>
+    <div class="current-day__item">
+      <div class="cday-item__wind">12</div>
+    </div>
+    <div class="current-day__item">
+      <div class="cday-item__wind">12</div>
+    </div>
+    <div class="current-day__item">
+      <div class="cday-item__wind">12</div>
+    </div>
+    <div class="current-day__item">
+      <div class="cday-item__wind">12</div>
+    </div>
+  </div>
+</div>

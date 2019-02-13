@@ -40,6 +40,7 @@ body {
   border-radius: 3px;
   width: 520px;
   margin-top: 24px;
+  min-height: 298px;
   position: relative;
   background-repeat: no-repeat;
   background-size: cover;
@@ -466,4 +467,8 @@ input:focus {
 
 .td-weather__wrapper {
   display: flex;
+}
+
+.cday-block {
+  height: 332px;
 }
