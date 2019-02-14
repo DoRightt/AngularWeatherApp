@@ -3,14 +3,14 @@
     <div class="current-week__item cweek-item" *ngFor="let day of weatherByDays">
       <div class="cweek-item__date">
         <span class="cdate__day-of-week">{{day.day}}</span>
-        <span class="cdate__day-of-month">12</span>
+        <span class="cdate__day-of-month">{{day.date | date: 'dd MMM'}}</span>
       </div>
       <div class="cweek-item__icon">
-        <img src='https://cdn3.iconfinder.com/data/icons/bebreezee-weather-symbols/690/icon-weather-sunrainheavy-512.png' alt=""/>
+        <img [src]="day.iconUrl" alt=""/>
       </div>
       <div class="cweek-item__temp">
-        <div class="temp__day"><span>Днем</span>12&#176;</div>
-        <div class="temp__night"><span>Ночью</span>12&#176;</div>
+        <div class="temp__day"><span>max</span>{{day.maxTemp}}&#176;</div>
+        <div class="temp__night"><span>min</span>{{day.minTemp}}&#176;</div>
       </div>
       <div class="cweek-item__resume">
         Overcast

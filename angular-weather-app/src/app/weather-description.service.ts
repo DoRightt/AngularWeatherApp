@@ -30,4 +30,27 @@ export class WeatherDescriptionService {
 
     return result;
   }
+
+  public getMainWeather(descriptionArray) {
+    let mainWeather;
+
+    if (descriptionArray.indexOf('snow') > -1) {
+      mainWeather = 'snow';
+    } else if (descriptionArray.indexOf('rain') > -1) {
+      mainWeather = 'rain';
+    } else if (descriptionArray.indexOf('sleet') > -1) {
+      mainWeather = 'sleet';
+    } else if (descriptionArray.indexOf('wind') > -1) {
+      mainWeather = 'wind';
+    } else if (descriptionArray.indexOf('partly-cloudy-day') > -1) {
+      mainWeather = 'partly-cloudy-day';
+    } else if (descriptionArray.indexOf('partly-cloudy-night') > -1) {
+      mainWeather = 'partly-cloudy-day';
+    } else if (descriptionArray.indexOf('cloudy') > -1) {
+      mainWeather = 'cloudy';
+    } else {
+      mainWeather = 'clear-day'
+    }
+      return mainWeather;
+  }
 }

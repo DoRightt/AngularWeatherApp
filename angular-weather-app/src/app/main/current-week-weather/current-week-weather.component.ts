@@ -22,7 +22,7 @@ export class CurrentWeekWeatherComponent implements OnInit {
     this.weatherService.getWeatherCatalog().subscribe((weather) => {
       this.weather = weather;
       this.weekWeather = this.weather.data.weather.slice(0,7);
-      this.weatherByDays = this.setWeatherByDays(this.weekWeather, this.interpretator.descriptionInterpretator)
+      this.weatherByDays = this.setWeatherByDays(this.weekWeather, this.interpretator)
     })
   }
 
@@ -30,14 +30,17 @@ export class CurrentWeekWeatherComponent implements OnInit {
     let result = [];
 
     for (let day of weather) {
+      let precipTypes = day.hourly.map(i => i.weatherDesc[0].value)
+            .map(i => int.descriptionInterpretator(i));
+
       let item = {
+        test: precipTypes,
         day: week[new Date(day.date).getDay()],
-        date: '',
-        // iconUrl: weatherIconUrls[int(day.weatherDesc[0].value)],
-        // minTemp: day.tempC,
-        // maxTemp: day.tempC,
-        // windSpeed: Math.round(day.windspeedKmph / 3.6),
-        // description: ''
+        date: new Date(day.date),
+        iconUrl: weatherIconUrls[int.getMainWeather(precipTypes)],
+        minTemp: day.mintempC,
+        maxTemp: day.maxtempC,
+        description: ''
       };
       
       result.push(item);
