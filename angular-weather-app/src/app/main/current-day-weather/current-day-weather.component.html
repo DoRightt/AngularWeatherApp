@@ -5,10 +5,10 @@
         {{hour.time}}<span>00</span>
       </div>
       <div class="cday-item__icon">
-        <img src='https://cdn3.iconfinder.com/data/icons/bebreezee-weather-symbols/690/icon-weather-sunrainheavy-512.png' alt=""/>
+        <img [src]='hour.iconUrl' alt=""/>
       </div>
       <div class="cday-item__temp">
-        24&#176;
+        {{hour.degrees}}&#176;
       </div>
     </div>
   </div>
@@ -17,26 +17,8 @@
     <div class="sep-line"></div>
   </div>
   <div class="cday-block__wind">
-    <div class="current-day__item">
-      <div class="cday-item__wind">12</div>
-    </div>
-    <div class="current-day__item">
-      <div class="cday-item__wind">12</div>
-    </div>
-    <div class="current-day__item">
-      <div class="cday-item__wind">12</div>
-    </div>
-    <div class="current-day__item">
-      <div class="cday-item__wind">12</div>
-    </div>
-    <div class="current-day__item">
-      <div class="cday-item__wind">12</div>
-    </div>
-    <div class="current-day__item">
-      <div class="cday-item__wind">12</div>
-    </div>
-    <div class="current-day__item">
-      <div class="cday-item__wind">12</div>
+    <div class="current-day__item" *ngFor="let hour of weatherHourly">
+      <div class="cday-item__wind">{{hour.windSpeed}}</div>
     </div>
   </div>
 </div>

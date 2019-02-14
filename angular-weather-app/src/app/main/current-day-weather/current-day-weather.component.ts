@@ -28,15 +28,13 @@ export class CurrentDayWeatherComponent implements OnInit {
   private setWeatherByHour(weather, int) {
     let result = [];
 
-
-    for (let index of weather) {
+    for (let hour of weather) {
       let item = {
-        time: this.timeValidator(index.time),
-        icon: int(index.weatherDesc[0].value),
-        degrees: index.tempC,
-        windSpeed: Math.round(index.windspeedKmph / 3.6),
+        time: this.timeValidator(hour.time),
+        iconUrl: weatherIconUrls[int(hour.weatherDesc[0].value)],
+        degrees: hour.tempC,
+        windSpeed: Math.round(hour.windspeedKmph / 3.6),
       };
-      
       result.push(item);
     }
 
