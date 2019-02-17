@@ -1,13 +1,17 @@
 import { Injectable } from '@angular/core';
 
+import { weatherIconUrls } from './weatherIconUrls';
+import { week } from './daysOfWeek';
+import { description } from './weather-description-list';
+
 @Injectable({
   providedIn: 'root'
 })
 export class WeatherDescriptionService {
 
   constructor() { }
-  
-  public descriptionInterpretator(description): any {
+
+  descriptionInterpretator(description): string {
     let result;
 
     if (description.indexOf('snow') > -1 || description.indexOf('Blizzard') > -1) {
@@ -31,7 +35,7 @@ export class WeatherDescriptionService {
     return result;
   }
 
-  public getMainWeather(descriptionArray) {
+  getMainWeather(descriptionArray): string {
     let mainWeather;
 
     if (descriptionArray.indexOf('snow') > -1) {
@@ -51,14 +55,40 @@ export class WeatherDescriptionService {
     } else {
       mainWeather = 'clear-day'
     }
+
       return mainWeather;
   }
 
-    checkWeekend(day) {
-        if (day === 0 || day === 6) {
-            return true
-        } else {
-            return false;
-        }
+    checkWeekend(day): boolean {
+      if (day === 0 || day === 6) {
+        return true
+      } else {
+        return false;
+      }
+    }
+
+    setWeatherByDays(weather, int): Array<{}> {
+      let result = [];
+
+      for (let day of weather) {
+        let precipTypes = day.hourly.map(i => i.weatherDesc[0].value).map(i => int.descriptionInterpretator(i));
+        let windSpeedArr = day.hourly.map(i => i.windspeedKmph);
+
+        let item = {
+          day: week[new Date(day.date).getDay()],
+          date: new Date(day.date),
+          iconUrl: weatherIconUrls[int.getMainWeather(precipTypes)],
+          minTemp: day.mintempC,
+          maxTemp: day.maxtempC,
+          maxWind: Math.max(...windSpeedArr),
+          description: description[int.getMainWeather(precipTypes)],
+          precip: day.totalSnow_cm * 10,
+          isWeekend: this.checkWeekend(new Date(day.date).getDay())
+        };
+
+        result.push(item);
+      }
+
+      return result;
     }
 }
