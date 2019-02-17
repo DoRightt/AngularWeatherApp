@@ -18,7 +18,11 @@
   </div>
   <div class="cday-block__wind">
     <div class="current-day__item" *ngFor="let hour of weatherHourly">
-      <div class="cday-item__wind">{{hour.windSpeed}}</div>
+      <div class="cday-item__wind"
+           [ngClass]="{'wind-extra-high': hour.windSpeed >= 22,
+                       'wind-high': hour.windSpeed >= 16,
+                       'wind-medium': hour.windSpeed >= 8,
+                       'wind-low': hour.windSpeed < 8}">{{hour.windSpeed}}</div>
     </div>
   </div>
 </div>

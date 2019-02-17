@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-
-import { WeatherService } from '../../weather.service'
-import { WeatherDescriptionService } from '../../weather-description.service'
-import { backgroundUrls } from '../../backgroundUrls'
-import { weatherIconUrls } from '../../weatherIconUrls'
-import { week } from '../../daysOfWeek'
+;
+import { WeatherService } from '../../weather.service';
+import { WeatherDescriptionService } from '../../weather-description.service';
+import { backgroundUrls } from '../../backgroundUrls';
+import { weatherIconUrls } from '../../weatherIconUrls';
+import { week } from '../../daysOfWeek';
+import { description } from "../../weather-description-list"
 
 @Component({
   selector: 'app-current-week-weather',
@@ -32,17 +33,15 @@ export class CurrentWeekWeatherComponent implements OnInit {
     for (let day of weather) {
       let precipTypes = day.hourly.map(i => i.weatherDesc[0].value)
             .map(i => int.descriptionInterpretator(i));
-
       let item = {
-        test: precipTypes,
         day: week[new Date(day.date).getDay()],
         date: new Date(day.date),
         iconUrl: weatherIconUrls[int.getMainWeather(precipTypes)],
         minTemp: day.mintempC,
         maxTemp: day.maxtempC,
-        description: ''
+        description: description[int.getMainWeather(precipTypes)],
+        isWeekend: this.interpretator.checkWeekend(new Date(day.date).getDay())
       };
-      
       result.push(item);
     }
 

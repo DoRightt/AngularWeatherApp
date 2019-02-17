@@ -53,4 +53,12 @@ export class WeatherDescriptionService {
     }
       return mainWeather;
   }
+
+    checkWeekend(day) {
+        if (day === 0 || day === 6) {
+            return true
+        } else {
+            return false;
+        }
+    }
 }

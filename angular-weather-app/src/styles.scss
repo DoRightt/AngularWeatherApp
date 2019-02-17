@@ -249,7 +249,6 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #e68686;
   transform: skew(-19deg);
   font-size: 18px;
 }
@@ -471,4 +470,23 @@ input:focus {
 
 .cday-block {
   height: 332px;
+}
+
+.weekend {
+  color: #d24032;
+}
+.wind-extra-high {
+  background-image: linear-gradient(to right, transparent 1%, red);
+}
+
+.wind-high {
+  background-image: linear-gradient(to right, transparent 1%, #d74f00);
+}
+
+.wind-medium {
+  background-image: linear-gradient(to right, transparent 1%, #ffe480);
+}
+
+.wind-low {
+  background-image: linear-gradient(to right, transparent 1%, #e1e5e5);
 }
