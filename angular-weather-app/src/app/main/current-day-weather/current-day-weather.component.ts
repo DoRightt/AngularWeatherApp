@@ -19,7 +19,7 @@ export class CurrentDayWeatherComponent implements OnInit {
     this.weatherService.getWeatherCatalog().subscribe((weather) => {
       this.weather = weather;
       this.todayWeather = weather.data.weather[0].hourly;
-      this.weatherHourly = this.interpretator.setWeatherByHour(this.todayWeather, this.interpretator.descriptionInterpretator)
+      this.weatherHourly = this.interpretator.setWeatherBy('hours', this.todayWeather)
     });
   }
 }

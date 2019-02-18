@@ -1,7 +1,7 @@
 const description = {
   'rain': 'Rain',
   'snow': 'Snow',
-  'cloudy': 'Пасмурно',
+  'cloudy': 'Overcast',
   'partly-cloudy-day': 'Partly cloudy',
   'partly-cloudy-night': 'Partly cloudy',
   'sleet': 'Sleet',

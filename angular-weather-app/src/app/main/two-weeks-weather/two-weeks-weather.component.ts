@@ -18,7 +18,7 @@ export class TwoWeeksWeatherComponent implements OnInit {
     this.weatherService.getWeatherCatalog().subscribe((weather) => {
       this.weather = weather;
       this.twoWeeksWeather = this.weather.data.weather.slice(0,14);
-      this.weatherByDays = this.interpretator.setWeatherByDays(this.twoWeeksWeather, this.interpretator)
+      this.weatherByDays = this.interpretator.setWeatherBy('days', this.twoWeeksWeather)
     })
   }
 }

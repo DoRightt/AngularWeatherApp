@@ -8,7 +8,8 @@ import {switchMap, tap} from "rxjs/internal/operators";
   providedIn: 'root'
 })
 export class WeatherService {
-  private key = 'dd6301427900459c863160646190201';
+  private key = 'dd6301427900459c863160646190201'
+  // private key = 'f7f36a0c7c3e4214a5e193731182312'
 
   private queryString = null;
 

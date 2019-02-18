@@ -3,7 +3,7 @@ const weatherIconUrls = {
   'snow': 'assets/image/snow.png',
   'cloudy': 'assets/image/cloud.png',
   'partly-cloudy-day': 'assets/image/cloudy.png',
-  'partly-cloudy-night': 'assets/image/cloudy.png',
+  'partly-cloudy-night': 'assets/image/nightCloudy.png',
   'sleet': 'assets/image/nightSnowRain.png',
   'wind': 'assets/image/wind.png',
   'fog': 'assets/image/fog.png',

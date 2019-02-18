@@ -19,7 +19,7 @@ export class TenDaysWeatherComponent implements OnInit {
     this.weatherService.getWeatherCatalog().subscribe((weather) => {
       this.weather = weather;
       this.tenDaysWeather = this.weather.data.weather.slice(0,10);
-      this.weatherByDays = this.interpretator.setWeatherByDays(this.tenDaysWeather, this.interpretator)
+      this.weatherByDays = this.interpretator.setWeatherBy('days', this.tenDaysWeather)
     })
   }
 }

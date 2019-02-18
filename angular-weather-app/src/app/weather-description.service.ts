@@ -16,9 +16,9 @@ export class WeatherDescriptionService {
 
     if (description.indexOf('snow') > -1 || description.indexOf('Blizzard') > -1) {
       result = 'snow'
-    } else if (description.indexOf('Partly cloudy') > -1 && new Date().getHours() > 4 && new Date().getHours() < 20) {
+    } else if (description.indexOf('Partly cloudy') > -1) {
       result = 'partly-cloudy-day'
-    } else if (description.indexOf('Partly cloudy') > -1 && new Date().getHours() < 4 || new Date().getHours() > 20) {
+    } else if (description.indexOf('Partly cloudy') > -1) {
       result = 'partly-cloudy-night'
     } else if (description.indexOf('Cloudy') > -1 || description.indexOf('Overcast') > -1) {
       result = 'cloudy'
@@ -49,7 +49,7 @@ export class WeatherDescriptionService {
     } else if (descriptionArray.indexOf('partly-cloudy-day') > -1) {
       mainWeather = 'partly-cloudy-day';
     } else if (descriptionArray.indexOf('partly-cloudy-night') > -1) {
-      mainWeather = 'partly-cloudy-day';
+      mainWeather = 'partly-cloudy-night';
     } else if (descriptionArray.indexOf('cloudy') > -1) {
       mainWeather = 'cloudy';
     } else {
@@ -67,51 +67,59 @@ export class WeatherDescriptionService {
     }
   }
 
-  setWeatherByDays(weather, int): Array<{}> {
-    let result = [];
-
-    for (let day of weather) {
-      let precipTypes = day.hourly.map(i => i.weatherDesc[0].value).map(i => int.descriptionInterpretator(i));
-      let windSpeedArr = day.hourly.map(i => i.windspeedKmph);
-
-      let item = {
-        day: week[new Date(day.date).getDay()],
-        date: new Date(day.date),
-        iconUrl: weatherIconUrls[int.getMainWeather(precipTypes)],
-        minTemp: day.mintempC,
-        maxTemp: day.maxtempC,
-        maxWind: Math.max(...windSpeedArr),
-        description: description[int.getMainWeather(precipTypes)],
-        precip: day.totalSnow_cm * 10,
-        isWeekend: this.checkWeekend(new Date(day.date).getDay())
-      };
-
-      result.push(item);
+  setWeatherBy(weatherBy, weather) {
+    if (weatherBy === 'days') {
+	    return this.setWeatherByDays(weather)
+    } else if (weatherBy === 'hours') {
+	    return this.setWeatherByHour(weather)
     }
-
-    return result;
-  }
-
-  setWeatherByHour(weather, int) {
-    let result = [];
-
-    for (let hour of weather) {
-      let item = {
-        time: this.timeValidator(hour.time),
-        iconUrl: weatherIconUrls[int(hour.weatherDesc[0].value)],
-        degrees: hour.tempC,
-        windSpeed: Math.round(hour.windspeedKmph / 3.6),
-        description: hour.weatherDesc[0].value,
-        precip: hour.precipMM
-      };
-      result.push(item);
-    }
-
-    return result;
   }
 
   timeValidator(time) {
     time = time > 0 ? time / 100 : '00';
     return time.toString().length < 2 ? '0' + time : time;
   }
+
+	setWeatherByDays(weather): Array<{}> {
+		let result = [];
+
+		for (let day of weather) {
+			let precipTypes = day.hourly.map(i => i.weatherDesc[0].value).map(i => this.descriptionInterpretator(i));
+			let windSpeedArr = day.hourly.map(i => i.windspeedKmph);
+
+			let item = {
+				day: week[new Date(day.date).getDay()],
+				date: new Date(day.date),
+				iconUrl: weatherIconUrls[this.getMainWeather(precipTypes)],
+				minTemp: day.mintempC,
+				maxTemp: day.maxtempC,
+				maxWind: Math.max(...windSpeedArr),
+				description: description[this.getMainWeather(precipTypes)],
+				precip: day.totalSnow_cm * 10,
+				isWeekend: this.checkWeekend(new Date(day.date).getDay())
+			};
+
+			result.push(item);
+		}
+
+		return result;
+	}
+
+	setWeatherByHour(weather) {
+		let result = [];
+
+		for (let hour of weather) {
+			let item = {
+				time: this.timeValidator(hour.time),
+				iconUrl: weatherIconUrls[this.descriptionInterpretator(hour.weatherDesc[0].value)],
+				degrees: hour.tempC,
+				windSpeed: Math.round(hour.windspeedKmph / 3.6),
+				description: hour.weatherDesc[0].value,
+				precip: hour.precipMM
+			};
+			result.push(item);
+		}
+
+		return result;
+	}
 }

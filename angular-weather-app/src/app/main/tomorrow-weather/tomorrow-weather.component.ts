@@ -18,7 +18,7 @@ export class TomorrowWeatherComponent implements OnInit {
     this.weatherService.getWeatherCatalog().subscribe((weather) => {
       this.weather = weather;
       this.tomorrowWeather = weather.data.weather[1].hourly;
-      this.weatherHourly = this.interpretator.setWeatherByHour(this.tomorrowWeather, this.interpretator.descriptionInterpretator)
+      this.weatherHourly = this.interpretator.setWeatherBy('hours', this.tomorrowWeather)
     });
   }
 }

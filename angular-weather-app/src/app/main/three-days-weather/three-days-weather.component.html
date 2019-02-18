@@ -1,0 +1,35 @@
+<div class="threedays__block thd-block">
+  <div class="thd-block__weather">
+    <div class="thd-block__item thday-item" *ngFor="let day of weatherByDays, index as i">
+      <div class="thday-item__date">
+        <span class="cdate__day-of-week" [ngClass]="{'weekend': day.isWeekend}">{{i === 0 ? 'Today' : day.day}}</span>
+        <span class="cdate__day-of-month">{{day.date | date: 'dd MMM'}}</span>
+      </div>
+      <div class="thday-item__temp">
+        <div class="thday-item__info th-info" *ngFor="let hour of day.hourly">
+          <span class="th-info__time">{{this.interpretator.timeValidator(hour.time)}}:00</span>
+          <img class="th-info__icon" [src]="hour.iconUrl" />
+          <span class="th-info__temp">{{hour.tempC}}&#176;</span>
+        </div>
+      </div>
+      <div class="current-day__separator">
+        <span>Скорость ветра, <i>м.с</i></span>
+        <div class="sep-line"></div>
+      </div>
+      <div class="thday-block__wind">
+        <div class="thday__item" *ngFor="let hour of day.hourly">
+          <div class="thday-item__wind">{{hour.windSpeed}}</div>
+        </div>
+      </div>
+      <div class="current-day__separator">
+        <span>Осадки, <i>мм</i></span>
+        <div class="sep-line"></div>
+      </div>
+      <div class="thday-block__precip">
+        <div class="thday__item" *ngFor="let hour of day.hourly">
+          <div class="thday-item__precip">{{hour.precipMM}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

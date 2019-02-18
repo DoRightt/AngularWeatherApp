@@ -21,6 +21,7 @@ export class CurrentWeatherComponent implements OnInit{
   pressure;
   wind;
   background;
+  test
 
   constructor(private weatherService: WeatherService, private interpretator: WeatherDescriptionService) {}
 
@@ -35,6 +36,7 @@ export class CurrentWeatherComponent implements OnInit{
       this.description = this.currentWeather.weatherDesc[0].value;
       this.background = backgroundUrls[this.interpretator.descriptionInterpretator(this.description)];
       this.iconUrl = weatherIconUrls[this.interpretator.descriptionInterpretator(this.description)];
+      this.test = this.interpretator.descriptionInterpretator(this.description)
     });
   }
 }
