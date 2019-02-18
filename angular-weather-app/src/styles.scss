@@ -490,3 +490,10 @@ input:focus {
 .wind-low {
   background-image: linear-gradient(to right, transparent 1%, #e1e5e5);
 }
+
+span.day-of-week__zero {
+  display: inline;
+  font-size: 16px;
+  top: -5px;
+  position: relative;
+}

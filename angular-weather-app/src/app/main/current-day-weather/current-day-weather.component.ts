@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 
 import { WeatherService } from '../../weather.service'
 import { WeatherDescriptionService } from '../../weather-description.service'
-import { backgroundUrls } from '../../backgroundUrls'
-import { weatherIconUrls } from '../../weatherIconUrls'
 
 @Component({
   selector: 'app-current-day-weather',
@@ -21,29 +19,7 @@ export class CurrentDayWeatherComponent implements OnInit {
     this.weatherService.getWeatherCatalog().subscribe((weather) => {
       this.weather = weather;
       this.todayWeather = weather.data.weather[0].hourly;
-      this.weatherHourly = this.setWeatherByHour(this.todayWeather, this.interpretator.descriptionInterpretator)
+      this.weatherHourly = this.interpretator.setWeatherByHour(this.todayWeather, this.interpretator.descriptionInterpretator)
     });
   }
-
-  private setWeatherByHour(weather, int) {
-    let result = [];
-
-    for (let hour of weather) {
-      let item = {
-        time: this.timeValidator(hour.time),
-        iconUrl: weatherIconUrls[int(hour.weatherDesc[0].value)],
-        degrees: hour.tempC,
-        windSpeed: Math.round(hour.windspeedKmph / 3.6),
-      };
-      result.push(item);
-    }
-
-    return result;
-  }
-
-  private timeValidator(time) {
-    time = time > 0 ? time / 100 : '00';
-    return time.toString().length < 2 ? '0' + time : time;
-  }
-
 }

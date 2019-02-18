@@ -11,6 +11,8 @@ import { CurrentWeatherComponent } from './main/current-weather/current-weather.
 import { CurrentDayWeatherComponent } from './main/current-day-weather/current-day-weather.component';
 import { CurrentWeekWeatherComponent } from './main/current-week-weather/current-week-weather.component';
 import { TenDaysWeatherComponent } from './main/ten-days-weather/ten-days-weather.component';
+import { TwoWeeksWeatherComponent } from './main/two-weeks-weather/two-weeks-weather.component';
+import { TomorrowWeatherComponent } from './main/tomorrow-weather/tomorrow-weather.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,9 @@ import { TenDaysWeatherComponent } from './main/ten-days-weather/ten-days-weathe
     CurrentWeatherComponent,
     CurrentDayWeatherComponent,
     CurrentWeekWeatherComponent,
-    TenDaysWeatherComponent
+    TenDaysWeatherComponent,
+    TwoWeeksWeatherComponent,
+    TomorrowWeatherComponent
   ],
   imports: [
     BrowserModule,

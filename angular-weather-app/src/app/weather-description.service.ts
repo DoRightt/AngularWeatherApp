@@ -59,36 +59,59 @@ export class WeatherDescriptionService {
       return mainWeather;
   }
 
-    checkWeekend(day): boolean {
-      if (day === 0 || day === 6) {
-        return true
-      } else {
-        return false;
-      }
+  checkWeekend(day): boolean {
+    if (day === 0 || day === 6) {
+      return true
+    } else {
+      return false;
+    }
+  }
+
+  setWeatherByDays(weather, int): Array<{}> {
+    let result = [];
+
+    for (let day of weather) {
+      let precipTypes = day.hourly.map(i => i.weatherDesc[0].value).map(i => int.descriptionInterpretator(i));
+      let windSpeedArr = day.hourly.map(i => i.windspeedKmph);
+
+      let item = {
+        day: week[new Date(day.date).getDay()],
+        date: new Date(day.date),
+        iconUrl: weatherIconUrls[int.getMainWeather(precipTypes)],
+        minTemp: day.mintempC,
+        maxTemp: day.maxtempC,
+        maxWind: Math.max(...windSpeedArr),
+        description: description[int.getMainWeather(precipTypes)],
+        precip: day.totalSnow_cm * 10,
+        isWeekend: this.checkWeekend(new Date(day.date).getDay())
+      };
+
+      result.push(item);
     }
 
-    setWeatherByDays(weather, int): Array<{}> {
-      let result = [];
+    return result;
+  }
 
-      for (let day of weather) {
-        let precipTypes = day.hourly.map(i => i.weatherDesc[0].value).map(i => int.descriptionInterpretator(i));
-        let windSpeedArr = day.hourly.map(i => i.windspeedKmph);
+  setWeatherByHour(weather, int) {
+    let result = [];
 
-        let item = {
-          day: week[new Date(day.date).getDay()],
-          date: new Date(day.date),
-          iconUrl: weatherIconUrls[int.getMainWeather(precipTypes)],
-          minTemp: day.mintempC,
-          maxTemp: day.maxtempC,
-          maxWind: Math.max(...windSpeedArr),
-          description: description[int.getMainWeather(precipTypes)],
-          precip: day.totalSnow_cm * 10,
-          isWeekend: this.checkWeekend(new Date(day.date).getDay())
-        };
-
-        result.push(item);
-      }
-
-      return result;
+    for (let hour of weather) {
+      let item = {
+        time: this.timeValidator(hour.time),
+        iconUrl: weatherIconUrls[int(hour.weatherDesc[0].value)],
+        degrees: hour.tempC,
+        windSpeed: Math.round(hour.windspeedKmph / 3.6),
+        description: hour.weatherDesc[0].value,
+        precip: hour.precipMM
+      };
+      result.push(item);
     }
+
+    return result;
+  }
+
+  timeValidator(time) {
+    time = time > 0 ? time / 100 : '00';
+    return time.toString().length < 2 ? '0' + time : time;
+  }
 }
