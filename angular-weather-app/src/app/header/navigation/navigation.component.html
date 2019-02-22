@@ -1,7 +1,7 @@
 <nav class="header__nav nav">
-  <a exact to="/weatherApp/dist" activeClassName="nav--active" class="nav__item">Today</a>
-  <a to="/weatherApp/dist/tomorrow" activeClassName="nav--active" class="nav__item">Tomorrow</a>
-  <a to="/weatherApp/dist/threedays" activeClassName="nav--active" class="nav__item">3 days</a>
-  <a to="/weatherApp/dist/tendays" activeClassName="nav--active" class="nav__item">10 days</a>
-  <a to="/weatherApp/dist/twoweeks" activeClassName="nav--active" class="nav__item">2 weeks</a>
+  <a routerLink="" routerLinkActive="nav--active" class="nav__item" [routerLinkActiveOptions]="{ exact: true }">Today</a>
+  <a routerLink="tomorrow" routerLinkActive="nav--active" class="nav__item">Tomorrow</a>
+  <a routerLink="3days" routerLinkActive="nav--active" class="nav__item">3 days</a>
+  <a routerLink="10days" routerLinkActive="nav--active" class="nav__item">10 days</a>
+  <a routerLink="2weeks" routerLinkActive="nav--active" class="nav__item">2 weeks</a>
 </nav>

@@ -14,6 +14,8 @@ import { TenDaysWeatherComponent } from './main/ten-days-weather/ten-days-weathe
 import { TwoWeeksWeatherComponent } from './main/two-weeks-weather/two-weeks-weather.component';
 import { TomorrowWeatherComponent } from './main/tomorrow-weather/tomorrow-weather.component';
 import { ThreeDaysWeatherComponent } from './main/three-days-weather/three-days-weather.component';
+import { SearchLocationComponent } from './header/search-location/search-location.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -26,13 +28,15 @@ import { ThreeDaysWeatherComponent } from './main/three-days-weather/three-days-
     TenDaysWeatherComponent,
     TwoWeeksWeatherComponent,
     TomorrowWeatherComponent,
-    ThreeDaysWeatherComponent
+    ThreeDaysWeatherComponent,
+    SearchLocationComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
