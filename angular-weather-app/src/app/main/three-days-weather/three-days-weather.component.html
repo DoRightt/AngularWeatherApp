@@ -1,3 +1,4 @@
+<div class="current-location">Weather in <span *ngIf="city === null">your</span> city <span>{{city | titlecase }}</span> on 3 days</div>
 <div class="threedays__block thd-block">
   <div class="thd-block__weather">
     <div class="thd-block__item thday-item" *ngFor="let day of weatherByDays, index as i">

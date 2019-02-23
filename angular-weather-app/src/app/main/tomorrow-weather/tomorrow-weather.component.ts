@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {WeatherDescriptionService} from "../../weather-description.service";
 import {WeatherService} from "../../weather.service";
+import {CityService} from "../../city.service";
 
 @Component({
   selector: 'app-tomorrow-weather',
@@ -11,8 +12,12 @@ export class TomorrowWeatherComponent implements OnInit {
   weather;
   tomorrowWeather;
   weatherHourly;
-
-  constructor(private weatherService: WeatherService, private interpretator: WeatherDescriptionService) { }
+  city;
+  constructor(
+    private weatherService: WeatherService,
+    private interpretator: WeatherDescriptionService,
+    private cityService: CityService
+  ) { }
 
   ngOnInit() {
     this.weatherService.getWeatherCatalog().subscribe((weather) => {
@@ -20,5 +25,7 @@ export class TomorrowWeatherComponent implements OnInit {
       this.tomorrowWeather = weather.data.weather[1].hourly;
       this.weatherHourly = this.interpretator.setWeatherBy('hours', this.tomorrowWeather)
     });
+
+	  this.cityService.city$.subscribe(value => this.city = value);
   }
 }

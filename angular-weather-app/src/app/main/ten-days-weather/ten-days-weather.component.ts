@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { WeatherService } from '../../weather.service';
 import { WeatherDescriptionService } from '../../weather-description.service';
+import {CityService} from "../../city.service";
 
 @Component({
   selector: 'app-ten-days-weather',
@@ -13,7 +14,13 @@ export class TenDaysWeatherComponent implements OnInit {
   tenDaysWeather;
   weatherByDays;
 
-  constructor(private weatherService: WeatherService, private interpretator: WeatherDescriptionService) { }
+  constructor(
+    private weatherService: WeatherService,
+    private interpretator: WeatherDescriptionService,
+    private cityService: CityService
+  ) { }
+
+  city;
 
   ngOnInit() {
     this.weatherService.getWeatherCatalog().subscribe((weather) => {
@@ -21,5 +28,7 @@ export class TenDaysWeatherComponent implements OnInit {
       this.tenDaysWeather = this.weather.data.weather.slice(0,10);
       this.weatherByDays = this.interpretator.setWeatherBy('days', this.tenDaysWeather)
     })
+
+	  this.cityService.city$.subscribe(value => this.city = value);
   }
 }

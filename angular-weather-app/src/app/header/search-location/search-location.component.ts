@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormControl } from "@angular/forms";
 import {tap} from "rxjs/internal/operators/tap";
@@ -13,16 +13,19 @@ import {Observable} from "rxjs/index";
 export class SearchLocationComponent implements OnInit {
   cityData;
   coords;
-  name = new FormControl('');
+  city = new FormControl('');
   queryString;
-  
+
   constructor(private http: HttpClient) { }
 
   ngOnInit() {
   }
 
+	@Output() onSearch = new EventEmitter();
+	@Output() getCoords = new EventEmitter();
+
   setSearchedCity() {
-    let city = this.cityNameValidator(this.name.value)
+    let city = this.cityNameValidator(this.city.value)
     return new Observable((observer) => {
       observer.next(city);
       observer.complete();
@@ -34,11 +37,12 @@ export class SearchLocationComponent implements OnInit {
   }
 
   getCity() {
-    this.name.setValue('')
+    this.city.setValue('')
     return this.http.get(this.queryString)
   }
 
   send() {
+    this.onSearch.emit(this.city.value)
     return this.setSearchedCity().pipe(
       tap((city) => this.setQueryString(city)),
       switchMap(() => this.getCity()),
@@ -46,6 +50,7 @@ export class SearchLocationComponent implements OnInit {
     ).subscribe(data => {
       this.cityData = data;
       this.coords = this.cityData.results[0].geometry;
+	    this.getCoords.emit(this.coords)
     })
   };
 

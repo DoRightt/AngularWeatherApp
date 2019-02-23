@@ -1,3 +1,4 @@
+<div class="current-location">Weather in <span *ngIf="city === null">your</span> city <span>{{city | titlecase }}</span> on tomorrow</div>
 <div class="current-week__block cweek-block cweek-block--ten tomorrow">
   <div class="cweek-block__weather">
     <div class="current-week__item cweek-item" *ngFor="let hour of weatherHourly, index as i">

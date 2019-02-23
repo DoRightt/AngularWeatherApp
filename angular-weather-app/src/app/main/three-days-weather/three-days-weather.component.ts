@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { WeatherService } from '../../weather.service';
 import { WeatherDescriptionService } from '../../weather-description.service';
 import {weatherIconUrls} from "../../weatherIconUrls";
+import {CityService} from "../../city.service";
 
 @Component({
   selector: 'app-three-days-weather',
@@ -13,8 +14,13 @@ export class ThreeDaysWeatherComponent implements OnInit {
 	weather;
 	threeDaysWeather;
 	weatherByDays;
+	city;
 
-	constructor(private weatherService: WeatherService, private interpretator: WeatherDescriptionService) { }
+	constructor(
+		private weatherService: WeatherService,
+		private interpretator: WeatherDescriptionService,
+		private cityService: CityService
+	) { }
 
 	ngOnInit() {
 		this.weatherService.getWeatherCatalog().subscribe((weather) => {
@@ -30,5 +36,7 @@ export class ThreeDaysWeatherComponent implements OnInit {
 				})
 			}
 		})
+
+		this.cityService.city$.subscribe(value => this.city = value);;
 	}
 }

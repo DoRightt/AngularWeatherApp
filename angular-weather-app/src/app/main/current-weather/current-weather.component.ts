@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 
 import { WeatherService } from '../../weather.service'
 import { WeatherDescriptionService } from '../../weather-description.service'
@@ -24,6 +24,8 @@ export class CurrentWeatherComponent implements OnInit{
   test
 
   constructor(private weatherService: WeatherService, private interpretator: WeatherDescriptionService) {}
+
+  @Input() city;
 
   ngOnInit() {
     this.weatherService.getWeatherCatalog().subscribe((weather) => {
