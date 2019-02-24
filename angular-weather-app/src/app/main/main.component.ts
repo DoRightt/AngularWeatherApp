@@ -8,11 +8,13 @@ import {CityService} from "../city.service";
 })
 export class MainComponent implements OnInit {
   city;
+  coords;
 
   constructor(private cityService: CityService) {}
 
   ngOnInit() {
 	  this.cityService.city$.subscribe(value => this.city = value)
+	  this.cityService.coords$.subscribe(value => this.coords = value)
   }
 
 }

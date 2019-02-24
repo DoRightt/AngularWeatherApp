@@ -13,6 +13,8 @@ export class TomorrowWeatherComponent implements OnInit {
   tomorrowWeather;
   weatherHourly;
   city;
+  coords;
+
   constructor(
     private weatherService: WeatherService,
     private interpretator: WeatherDescriptionService,
@@ -20,12 +22,22 @@ export class TomorrowWeatherComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.weatherService.getWeatherCatalog().subscribe((weather) => {
-      this.weather = weather;
-      this.tomorrowWeather = weather.data.weather[1].hourly;
-      this.weatherHourly = this.interpretator.setWeatherBy('hours', this.tomorrowWeather)
-    });
-
 	  this.cityService.city$.subscribe(value => this.city = value);
+	  this.cityService.coords$.subscribe(value => {
+		  this.coords = value;
+		  if (this.coords !== null) {
+			  this.weatherService.getWeatherCatalogBySearch(value).subscribe((weather) => {
+				  this.weather = weather;
+				  this.tomorrowWeather = this.weather.data.weather[1].hourly;
+				  this.weatherHourly = this.interpretator.setWeatherBy('hours', this.tomorrowWeather)
+			  });
+		  } else {
+			  this.weatherService.getWeatherCatalog().subscribe((weather) => {
+				  this.weather = weather;
+				  this.tomorrowWeather = weather.data.weather[1].hourly;
+				  this.weatherHourly = this.interpretator.setWeatherBy('hours', this.tomorrowWeather)
+			  });
+		  }
+	  })
   }
 }

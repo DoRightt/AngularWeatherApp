@@ -10,7 +10,6 @@ import {switchMap, tap} from "rxjs/internal/operators";
 export class WeatherService {
   private key = 'dd6301427900459c863160646190201'
   // private key = 'f7f36a0c7c3e4214a5e193731182312'
-
   private queryString = null;
 
   constructor(private http: HttpClient) {}
@@ -27,7 +26,7 @@ export class WeatherService {
     });
   }
 
-  private setQueryString(position: Position): void {
+  private setQueryString(position): void {
     this.queryString = `http://api.worldweatheronline.com/premium/v1/weather.ashx?key=${this.key}&q=${position.coords.latitude},${position.coords.longitude}&num_of_days=14&tp=4&format=json`;
   }
 
@@ -46,5 +45,20 @@ export class WeatherService {
       })
     );
   }
+
+  public getWeatherCatalogBySearch(coords) {
+	  return new Observable((observer) => {
+	    observer.next(coords);
+    }).pipe(
+      tap(position => this.setQueryStringBuSearch(position)),
+      switchMap(() => {
+        return this.getWeather();
+      })
+    )
+  }
+
+	private setQueryStringBuSearch(position): void {
+		this.queryString = `http://api.worldweatheronline.com/premium/v1/weather.ashx?key=${this.key}&q=${position.lat},${position.lng}&num_of_days=14&tp=4&format=json`;
+	}
 }
 

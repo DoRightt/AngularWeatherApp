@@ -13,6 +13,8 @@ export class TenDaysWeatherComponent implements OnInit {
   weather;
   tenDaysWeather;
   weatherByDays;
+  city;
+  coords;
 
   constructor(
     private weatherService: WeatherService,
@@ -20,15 +22,23 @@ export class TenDaysWeatherComponent implements OnInit {
     private cityService: CityService
   ) { }
 
-  city;
-
   ngOnInit() {
-    this.weatherService.getWeatherCatalog().subscribe((weather) => {
-      this.weather = weather;
-      this.tenDaysWeather = this.weather.data.weather.slice(0,10);
-      this.weatherByDays = this.interpretator.setWeatherBy('days', this.tenDaysWeather)
-    })
-
 	  this.cityService.city$.subscribe(value => this.city = value);
+	  this.cityService.coords$.subscribe(value => {
+		  this.coords = value;
+		  if (this.coords !== null) {
+			  this.weatherService.getWeatherCatalogBySearch(value).subscribe((weather) => {
+				  this.weather = weather;
+				  this.tenDaysWeather = this.weather.data.weather.slice(0,10);
+				  this.weatherByDays = this.interpretator.setWeatherBy('days', this.tenDaysWeather)
+			  });
+		  } else {
+			  this.weatherService.getWeatherCatalog().subscribe((weather) => {
+				  this.weather = weather;
+				  this.tenDaysWeather = this.weather.data.weather.slice(0,10);
+				  this.weatherByDays = this.interpretator.setWeatherBy('days', this.tenDaysWeather)
+			  })
+		  }
+	  })
   }
 }

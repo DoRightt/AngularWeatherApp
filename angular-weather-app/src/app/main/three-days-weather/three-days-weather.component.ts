@@ -15,6 +15,7 @@ export class ThreeDaysWeatherComponent implements OnInit {
 	threeDaysWeather;
 	weatherByDays;
 	city;
+	coords;
 
 	constructor(
 		private weatherService: WeatherService,
@@ -23,20 +24,38 @@ export class ThreeDaysWeatherComponent implements OnInit {
 	) { }
 
 	ngOnInit() {
-		this.weatherService.getWeatherCatalog().subscribe((weather) => {
-			this.weather = weather;
-			this.threeDaysWeather = this.weather.data.weather.slice(0,3);
-			this.weatherByDays = this.interpretator.setWeatherBy('days', this.threeDaysWeather)
+		this.cityService.city$.subscribe(value => this.city = value);
+		this.cityService.coords$.subscribe(value => {
+			this.coords = value;
+			if (this.coords !== null) {
+				this.weatherService.getWeatherCatalogBySearch(value).subscribe((weather) => {
+					this.weather = weather;
+					this.threeDaysWeather = this.weather.data.weather.slice(0,3);
+					this.weatherByDays = this.interpretator.setWeatherBy('days', this.threeDaysWeather)
 
-			for (let index = 0; index < this.weatherByDays.length; index++) {
-				this.weatherByDays[index].hourly = this.threeDaysWeather[index].hourly.slice(1);
-				this.weatherByDays[index].hourly.forEach(index => {
-					index.iconUrl = weatherIconUrls[this.interpretator.descriptionInterpretator(index.weatherDesc[0].value)];
-					index.windSpeed = Math.round(index.windspeedKmph / 3.6)
+					for (let index = 0; index < this.weatherByDays.length; index++) {
+						this.weatherByDays[index].hourly = this.threeDaysWeather[index].hourly.slice(1);
+						this.weatherByDays[index].hourly.forEach(index => {
+							index.iconUrl = weatherIconUrls[this.interpretator.descriptionInterpretator(index.weatherDesc[0].value)];
+							index.windSpeed = Math.round(index.windspeedKmph / 3.6)
+						})
+					}
+				});
+			} else {
+				this.weatherService.getWeatherCatalog().subscribe((weather) => {
+					this.weather = weather;
+					this.threeDaysWeather = this.weather.data.weather.slice(0,3);
+					this.weatherByDays = this.interpretator.setWeatherBy('days', this.threeDaysWeather)
+
+					for (let index = 0; index < this.weatherByDays.length; index++) {
+						this.weatherByDays[index].hourly = this.threeDaysWeather[index].hourly.slice(1);
+						this.weatherByDays[index].hourly.forEach(index => {
+							index.iconUrl = weatherIconUrls[this.interpretator.descriptionInterpretator(index.weatherDesc[0].value)];
+							index.windSpeed = Math.round(index.windspeedKmph / 3.6)
+						})
+					}
 				})
 			}
 		})
-
-		this.cityService.city$.subscribe(value => this.city = value);;
 	}
 }
